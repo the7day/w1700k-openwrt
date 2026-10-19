@@ -65,6 +65,9 @@ jobs:
         # Variables expand inside the container, not on the runner.
         # shellcheck disable=SC2016
         docker_exec DK bash -e -c '
+          # Match OpenWrt source-mirror permissions when download.pl falls back to Git.
+          umask 022
+          git config --global tar.umask 0022
           REPO_URL="https://github.com/openwrt/openwrt"
           REPO_BRANCH="main"
           mkdir -p $DK_OPENWRT
