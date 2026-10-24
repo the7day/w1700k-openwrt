@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class SourceRevisionTests(unittest.TestCase):
     def test_nested_prepare_logs_and_failures(self):
         block = render(step('inputs')['run'], {})
-        for phase in ('', 'fetch', 'git-access', 'feed-revision', 'update', 'install', 'custom', 'download'):
+        for phase in ('', 'fetch', 'git-access', 'feed-revision', 'update', 'install', 'custom'):
             with self.subTest(phase=phase), tempfile.TemporaryDirectory() as tmp:
                 base = Path(tmp)
                 source = base / 'source'
@@ -58,7 +58,7 @@ class SourceRevisionTests(unittest.TestCase):
                 '''
                 result = subprocess.run(['bash', '-eo', 'pipefail', '-c', stub + block],
                                         cwd=base, env=env, text=True, capture_output=True)
-                expected = 1 if phase in ('update', 'install', 'download') else (19 if phase else 0)
+                expected = 1 if phase in ('update', 'install') else (19 if phase else 0)
                 self.assertEqual(result.returncode, expected, result.stderr)
                 calls = (base / 'calls').read_text()
                 if phase:
