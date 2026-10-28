@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
 
   # GitHub Actions uses UTC; daily 12:00 Hong Kong time = 04:00 UTC.
-  schedule:
-    - cron: '0 4 * * *'
 concurrency:
   group: w1700k-cache
   cancel-in-progress: false
