@@ -301,7 +301,7 @@ jobs:
     - name: Publish firmware and prune releases
       if: ${{ !cancelled() && steps.stage.outcome == 'success' }}
       env:
-        GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
       run: |
         # Read-only freshness gate; API errors/malformed replies fail closed.
         # This check and create are NOT atomic: main may advance between them.
